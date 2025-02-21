@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "638818745560",
+    "project_id": "appcontacts-4ef7b",
+    "storage_bucket": "appcontacts-4ef7b.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:638818745560:android:bfa000103b668371716bad",
+        "android_client_info": {
+          "package_name": "com.edsonlimadev.appcontact"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "638818745560-dotbg4koudvp0r831dpr9hoq0uaqdcgk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.edsonlimadev.appcontact",
+            "certificate_hash": "8cc64fc6cca2ddeabfdfa7fc4f1e855d7f9f7d93"
+          }
+        },
+        {
+          "client_id": "638818745560-e4l8osf8t026l6gjv0cf85du4kdpmt04.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpt-hHQqI0QqVjKgu5iKU1k2PL3-mC3wI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "638818745560-e4l8osf8t026l6gjv0cf85du4kdpmt04.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
