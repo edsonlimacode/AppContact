@@ -8,6 +8,7 @@ import com.edsonlimadev.appcontact.ui.navigation.Auth
 import com.edsonlimadev.appcontact.ui.navigation.ContactsList
 import com.edsonlimadev.appcontact.ui.navigation.authGraph
 import com.edsonlimadev.appcontact.ui.navigation.navigateToLogin
+import com.edsonlimadev.appcontact.ui.screens.details.DetailsScreen
 import com.edsonlimadev.appcontact.ui.screens.home.HomeScreen
 import com.edsonlimadev.appcontact.utils.isUserLoggedIn
 import kotlinx.serialization.Serializable

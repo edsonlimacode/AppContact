@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.edsonlimadev.appcontact.R
 import com.edsonlimadev.appcontact.ui.components.BottomNavigationBar
@@ -32,6 +33,10 @@ import com.edsonlimadev.appcontact.ui.navigation.navigateToProfile
 import com.edsonlimadev.appcontact.ui.theme.Dark900
 import com.edsonlimadev.appcontact.utils.getCurrentUser
 
+const val CONTACTS_LIST = "ContactsList"
+const val FAVORITE = "Favorite"
+const val PROFILE = "Profile"
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
@@ -39,58 +44,74 @@ fun HomeScreen(
     navController: NavHostController = rememberNavController()
 ) {
 
+    val backStackEntryState by navController.currentBackStackEntryAsState()
+    val currentRoute = backStackEntryState?.destination?.route
+    val route = currentRoute?.substringAfterLast(".")
+
     var itemSelected by remember {
         mutableStateOf<NavigationBarItem>(NavigationBarItem.Home)
     }
 
+    val isShowBottomAndTopBar = when (route) {
+        CONTACTS_LIST,
+        FAVORITE,
+        PROFILE -> true
+
+        else -> false
+    }
+
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = {
-                    Text(text = if (itemSelected == NavigationBarItem.Home) "Contatos" else "")
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Dark900,
-                    titleContentColor = Color.White
-                ),
-                actions = {
-                    IconButton(
-                        onClick = {
-                            getCurrentUser().signOut()
-                            onLogout()
+            if (isShowBottomAndTopBar) {
+                TopAppBar(
+                    title = {
+                        Text(text = if (itemSelected == NavigationBarItem.Home) "Contatos" else "")
+                    },
+                    colors = TopAppBarDefaults.topAppBarColors(
+                        containerColor = Dark900,
+                        titleContentColor = Color.White
+                    ),
+                    actions = {
+                        IconButton(
+                            onClick = {
+                                getCurrentUser().signOut()
+                                onLogout()
+                            }
+                        ) {
+                            Icon(
+                                painter = painterResource(R.drawable.ic_logout),
+                                contentDescription = null
+                            )
                         }
-                    ) {
-                        Icon(
-                            painter = painterResource(R.drawable.ic_logout),
-                            contentDescription = null
-                        )
                     }
-                }
-            )
+                )
+            }
         },
         bottomBar = {
+            if (isShowBottomAndTopBar) {
+                BottomNavigationBar(
+                    selectedItem = itemSelected,
+                    onClickNavigate = { navigationBarItem ->
+                        when (navigationBarItem) {
+                            NavigationBarItem.Home -> {
+                                itemSelected = navigationBarItem
+                                navController.navigateToHome()
+                            }
 
-            BottomNavigationBar(
-                selectedItem = itemSelected,
-                onClickNavigate = { navigationBarItem ->
-                    when (navigationBarItem) {
-                        NavigationBarItem.Home -> {
-                            itemSelected = navigationBarItem
-                            navController.navigateToHome()
-                        }
+                            NavigationBarItem.Favorite -> {
+                                itemSelected = navigationBarItem
+                                navController.navigateToFavorite()
+                            }
 
-                        NavigationBarItem.Favorite -> {
-                            itemSelected = navigationBarItem
-                            navController.navigateToFavorite()
-                        }
-
-                        NavigationBarItem.Profile -> {
-                            itemSelected = navigationBarItem
-                            navController.navigateToProfile()
+                            NavigationBarItem.Profile -> {
+                                itemSelected = navigationBarItem
+                                navController.navigateToProfile()
+                            }
                         }
                     }
-                }
-            )
+                )
+            }
+
         }
     ) {
         Column(

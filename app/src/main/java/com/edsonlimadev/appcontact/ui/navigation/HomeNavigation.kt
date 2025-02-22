@@ -17,9 +17,15 @@ object Profile
 @Serializable
 object Favorite
 
-fun NavGraphBuilder.homeDestination() {
+fun NavGraphBuilder.homeDestination(
+    navController: NavController
+) {
     composable<ContactsList> {
-        ContactsListScreen()
+        ContactsListScreen(
+            navigateToDetail = {
+                navController.navigateToDetails()
+            }
+        )
     }
 
     composable<Profile> {

@@ -1,5 +1,6 @@
 package com.edsonlimadev.appcontact.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
@@ -19,14 +20,21 @@ import com.edsonlimadev.appcontact.domain.model.Contact
 
 
 @Composable
-fun ContactListItem(contact: Contact) {
+fun ContactListItem(
+    modifier: Modifier, contact: Contact,
+    navigateToDetail: () -> Unit
+) {
     Row(
-        modifier = Modifier,
+        modifier = modifier.clickable {
+            navigateToDetail()
+        },
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {
         AsyncImage(
-            modifier = Modifier.size(50.dp).clip(CircleShape),
+            modifier = Modifier
+                .size(50.dp)
+                .clip(CircleShape),
             model = R.drawable.screen,
             contentDescription = null,
             contentScale = ContentScale.Crop

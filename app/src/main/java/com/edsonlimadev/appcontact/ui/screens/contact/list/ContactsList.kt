@@ -30,7 +30,9 @@ import com.edsonlimadev.appcontact.ui.theme.Gray600
 import com.edsonlimadev.appcontact.ui.theme.Gray700
 
 @Composable
-fun ContactsListScreen() {
+fun ContactsListScreen(
+    navigateToDetail: () -> Unit = {}
+) {
 
     Column(
         modifier = Modifier
@@ -77,7 +79,13 @@ fun ContactsListScreen() {
                         )
                     )
                     contacts.forEach { contact ->
-                        ContactListItem(contact)
+                        ContactListItem(
+                            modifier = Modifier.fillMaxWidth(),
+                            contact,
+                            navigateToDetail = {
+                                navigateToDetail()
+                            }
+                        )
                         Spacer(Modifier.height(10.dp))
                     }
                 }
