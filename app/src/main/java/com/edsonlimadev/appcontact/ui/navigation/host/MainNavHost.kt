@@ -7,6 +7,8 @@ import androidx.navigation.compose.composable
 import com.edsonlimadev.appcontact.ui.navigation.Auth
 import com.edsonlimadev.appcontact.ui.navigation.ContactsList
 import com.edsonlimadev.appcontact.ui.navigation.authGraph
+import com.edsonlimadev.appcontact.ui.navigation.contactFormDestination
+import com.edsonlimadev.appcontact.ui.navigation.navigateToContactForm
 import com.edsonlimadev.appcontact.ui.navigation.navigateToLogin
 import com.edsonlimadev.appcontact.ui.screens.details.DetailsScreen
 import com.edsonlimadev.appcontact.ui.screens.home.HomeScreen
@@ -29,8 +31,13 @@ fun NavHostScreen(
             HomeScreen(
                 onLogout = {
                     navController.navigateToLogin()
+                },
+                navigateToContactForm = {
+                    navController.navigateToContactForm()
                 }
             )
         }
+
+
     }
 }

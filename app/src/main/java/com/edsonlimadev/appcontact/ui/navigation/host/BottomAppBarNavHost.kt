@@ -4,8 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.edsonlimadev.appcontact.ui.navigation.ContactsList
+import com.edsonlimadev.appcontact.ui.navigation.contactFormDestination
 import com.edsonlimadev.appcontact.ui.navigation.detailsDestination
 import com.edsonlimadev.appcontact.ui.navigation.homeDestination
+import com.edsonlimadev.appcontact.ui.navigation.navigateToDetails
 
 @Composable
 fun BottomAppBarNavHost(
@@ -16,8 +18,15 @@ fun BottomAppBarNavHost(
         startDestination = ContactsList
     ) {
         homeDestination(
-            navController
+            navigateToDetail = {
+                navController.navigateToDetails()
+            }
         )
         detailsDestination()
+        contactFormDestination(
+            onClickBackToHome = {
+                navController.popBackStack()
+            }
+        )
     }
 }

@@ -18,13 +18,11 @@ object Profile
 object Favorite
 
 fun NavGraphBuilder.homeDestination(
-    navController: NavController
+    navigateToDetail: () -> Unit
 ) {
     composable<ContactsList> {
         ContactsListScreen(
-            navigateToDetail = {
-                navController.navigateToDetails()
-            }
+            navigateToDetail = navigateToDetail
         )
     }
 
