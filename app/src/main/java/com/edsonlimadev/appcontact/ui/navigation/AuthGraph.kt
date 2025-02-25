@@ -11,7 +11,6 @@ import com.edsonlimadev.appcontact.ui.screens.auth.login.LoginScreen
 import com.edsonlimadev.appcontact.ui.screens.auth.login.LoginViewModel
 import com.edsonlimadev.appcontact.ui.screens.auth.register.RegisterScreen
 import com.edsonlimadev.appcontact.ui.screens.auth.register.RegisterViewModel
-import com.edsonlimadev.appcontact.utils.getUserUid
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -76,7 +75,7 @@ fun NavGraphBuilder.authGraph(
 }
 
 fun NavController.navigateToLogin() {
-    navigate(Login){
+    navigate(Login) {
         popUpTo<ContactsList> {
             inclusive = true
         }

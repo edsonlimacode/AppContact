@@ -1,5 +1,6 @@
 package com.edsonlimadev.appcontact.ui.screens.contact.list
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -26,6 +28,7 @@ import com.edsonlimadev.appcontact.R
 import com.edsonlimadev.appcontact.data.db.favoriteContactsSample
 import com.edsonlimadev.appcontact.ui.components.ContactListItem
 import com.edsonlimadev.appcontact.ui.theme.Dark600
+import com.edsonlimadev.appcontact.ui.theme.Dark900
 import com.edsonlimadev.appcontact.ui.theme.Gray600
 import com.edsonlimadev.appcontact.ui.theme.Gray700
 
@@ -37,7 +40,7 @@ fun ContactsListScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .background(Dark900)
     ) {
         TextField(
             modifier = Modifier

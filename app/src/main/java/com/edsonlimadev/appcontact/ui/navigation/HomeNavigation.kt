@@ -3,10 +3,13 @@ package com.edsonlimadev.appcontact.ui.navigation
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.edsonlimadev.appcontact.ui.screens.favorite.FavoritesScreen
 import com.edsonlimadev.appcontact.ui.screens.contact.list.ContactsListScreen
+import com.edsonlimadev.appcontact.ui.screens.favorite.FavoritesScreen
 import com.edsonlimadev.appcontact.ui.screens.profile.ProfileScreen
 import kotlinx.serialization.Serializable
+
+@Serializable
+object Home
 
 @Serializable
 object ContactsList
@@ -36,6 +39,15 @@ fun NavGraphBuilder.homeDestination(
 }
 
 fun NavController.navigateToHome() {
+    navigate(Home) {
+        launchSingleTop = true
+        popUpTo<Login> {
+            inclusive = true
+        }
+    }
+}
+
+fun NavController.navigateToContactsList() {
     navigate(ContactsList) {
         launchSingleTop = true
         popUpTo<Login> {
