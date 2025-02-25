@@ -5,52 +5,29 @@ import com.edsonlimadev.appcontact.domain.model.Contact
 
 val contactsSample = listOf(
     Contact(
-        "Andy joe",
+        2,
+        "Alex michael",
         "889922325",
-        "john@gmail.com",
         "Av. sete",
-        980,
+        "980",
         "Jardim seven",
-        "São Paulo",
-        "SP"
-
+        "Fortaleza",
+        "CE",
     ),
     Contact(
+        2,
         "Ben michael",
         "889922325",
-        "john@gmail.com",
         "Av. sete",
-        980,
+        "S/N",
         "Jardim seven",
         "São Paulo",
-        "SP"
-
-    ),
-    Contact(
-        "Ace johnny",
-        "889922325",
-        "john@gmail.com",
-        "Av. sete",
-        980,
-        "Jardim seven",
-        "São Paulo",
-        "SP"
-    ),Contact(
-        "Eliot james",
-        "889922325",
-        "john@gmail.com",
-        "Av. sete",
-        980,
-        "Jardim seven",
-        "São Paulo",
-        "SP"
-    ),
+        "SP",
+    )
 )
 
 val favoriteContactsSample = mapOf(
-    "A" to contactsSample.filter { it.name.startsWith("A", true) },
-    "B" to contactsSample.filter { it.name.startsWith("B", true) },
-    "C" to contactsSample.filter { it.name.startsWith("C", true) },
-    "D" to contactsSample.filter { it.name.startsWith("d", true) },
-    "E" to contactsSample.filter { it.name.startsWith("e", true) }
+    "A" to contactsSample.filter { it.name?.startsWith("A", true) ?: false },
+    "B" to contactsSample.filter { it.name?.startsWith("B", true) ?: false },
+    "C" to contactsSample.filter { it.name?.startsWith("C", true) ?: false }
 )

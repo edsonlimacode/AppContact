@@ -8,26 +8,20 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -37,7 +31,6 @@ import com.edsonlimadev.appcontact.R
 import com.edsonlimadev.appcontact.ui.components.CustomTextField
 import com.edsonlimadev.appcontact.ui.theme.Dark900
 import com.edsonlimadev.appcontact.ui.theme.Gray500
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
 fun ContactFormScreen(
@@ -47,6 +40,25 @@ fun ContactFormScreen(
     var name by remember {
         mutableStateOf("")
     }
+    var number by remember {
+        mutableStateOf("")
+    }
+    var address by remember {
+        mutableStateOf("")
+    }
+    var addressNumber by remember {
+        mutableStateOf("")
+    }
+    var neighborhood by remember {
+        mutableStateOf("")
+    }
+    var city by remember {
+        mutableStateOf("")
+    }
+    var uf by remember {
+        mutableStateOf("")
+    }
+
 
     Column(
         modifier = Modifier
@@ -93,19 +105,11 @@ fun ContactFormScreen(
                 )
                 CustomTextField(
                     modifier = Modifier.fillMaxWidth(),
-                    value = name,
+                    value = number,
                     onValueChange = {
-                        name = it
+                        number = it
                     },
-                    placeholder = "Nome"
-                )
-                CustomTextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    value = name,
-                    onValueChange = {
-                        name = it
-                    },
-                    placeholder = "Nome"
+                    placeholder = "Numero"
                 )
             }
 
@@ -113,7 +117,7 @@ fun ContactFormScreen(
 
             Text(
                 modifier = Modifier.padding(bottom = 10.dp),
-                text = "Contato",
+                text = "Endereço",
                 fontSize = 18.sp,
                 color = Gray500
             )
@@ -121,49 +125,54 @@ fun ContactFormScreen(
             Column(
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(10.dp)
+                ){
+                    CustomTextField(
+                        modifier = Modifier.fillMaxWidth(0.8f),
+                        value = address,
+                        onValueChange = {
+                            address = it
+                        },
+                        placeholder = "Rua"
+                    )
+                    CustomTextField(
+                        modifier = Modifier.fillMaxWidth(),
+                        value = addressNumber,
+                        onValueChange = {
+                            addressNumber = it
+                        },
+                        placeholder = "N°"
+                    )
+                }
+
                 CustomTextField(
                     modifier = Modifier.fillMaxWidth(),
-                    value = name,
+                    value = neighborhood,
                     onValueChange = {
-                        name = it
+                        neighborhood = it
                     },
-                    placeholder = "Nome"
-                )
-                CustomTextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    value = name,
-                    onValueChange = {
-                        name = it
-                    },
-                    placeholder = "Nome"
-                )
-                CustomTextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    value = name,
-                    onValueChange = {
-                        name = it
-                    },
-                    placeholder = "Nome"
+                    placeholder = "Bairro"
                 )
 
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
                     CustomTextField(
-                        modifier = Modifier.fillMaxWidth(0.7f),
-                        value = name,
+                        modifier = Modifier.fillMaxWidth(0.8f),
+                        value = city,
                         onValueChange = {
-                            name = it
+                            city = it
                         },
-                        placeholder = "Nome"
+                        placeholder = "Cidade"
                     )
                     CustomTextField(
                         modifier = Modifier.fillMaxWidth(),
-                        value = name,
+                        value = uf,
                         onValueChange = {
-                            name = it
+                            uf = it
                         },
-                        placeholder = "Nome"
+                        placeholder = "UF"
                     )
                 }
 
@@ -185,13 +194,12 @@ fun ContactFormScreen(
                         onClick = {
                         }
                     ) {
-                        Text(text = "Savar", color = Gray500)
+                        Text(text = "Salvar", color = Gray500)
                     }
                 }
             }
         }
     }
-
 }
 
 @Preview(showBackground = true)

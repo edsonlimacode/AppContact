@@ -39,6 +39,6 @@ fun ContactListItem(
             contentDescription = null,
             contentScale = ContentScale.Crop
         )
-        Text(text = contact.name, fontSize = 20.sp, color = Color.White)
+        contact.name?.let { Text(text = it, fontSize = 20.sp, color = Color.White) }
     }
 }
