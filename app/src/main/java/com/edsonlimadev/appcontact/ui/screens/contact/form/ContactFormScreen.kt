@@ -1,5 +1,6 @@
 package com.edsonlimadev.appcontact.ui.screens.contact.form
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,22 +24,26 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.edsonlimadev.appcontact.R
+import com.edsonlimadev.appcontact.domain.model.Contact
 import com.edsonlimadev.appcontact.ui.components.CustomTextField
 import com.edsonlimadev.appcontact.ui.theme.Dark900
 import com.edsonlimadev.appcontact.ui.theme.Gray500
 
 @Composable
 fun ContactFormScreen(
-    onClickBack: () -> Unit
+    onClickBack: () -> Unit,
+    onClickSave: (Contact) -> Unit = {},
+    uiState: ContactFormUiState
 ) {
 
     var name by remember {
-        mutableStateOf("")
+        mutableStateOf(uiState.contact?.name ?: "")
     }
     var number by remember {
         mutableStateOf("")
@@ -59,6 +64,7 @@ fun ContactFormScreen(
         mutableStateOf("")
     }
 
+    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -127,7 +133,7 @@ fun ContactFormScreen(
             ) {
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(10.dp)
-                ){
+                ) {
                     CustomTextField(
                         modifier = Modifier.fillMaxWidth(0.8f),
                         value = address,
@@ -192,6 +198,21 @@ fun ContactFormScreen(
                     TextButton(
                         modifier = Modifier.height(48.dp),
                         onClick = {
+                            if(number.isEmpty() || name.isEmpty()){
+                                Toast.makeText(context, "Nome e numero são obrigatórios", Toast.LENGTH_SHORT).show()
+                            }else {
+                                val contact = Contact(
+                                    name = name,
+                                    number = number,
+                                    address = address,
+                                    addressNumber = addressNumber,
+                                    neighborhood = neighborhood,
+                                    city = city,
+                                    uf = uf
+                                )
+                                onClickSave(contact)
+                            }
+
                         }
                     ) {
                         Text(text = "Salvar", color = Gray500)
@@ -206,6 +227,7 @@ fun ContactFormScreen(
 @Composable
 private fun ContactFormPrev() {
     ContactFormScreen(
-        onClickBack = {}
+        onClickBack = {},
+        uiState = ContactFormUiState()
     )
 }

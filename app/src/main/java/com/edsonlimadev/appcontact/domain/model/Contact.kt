@@ -9,5 +9,5 @@ data class Contact(
     var neighborhood: String? = "",
     var city: String? = "",
     var uf: String? = "",
-    var favorite: Boolean? = false
+    var favorite: Boolean = false
 )

@@ -1,8 +1,12 @@
 package com.edsonlimadev.appcontact.ui.navigation
 
+import androidx.compose.runtime.getValue
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.edsonlimadev.appcontact.ui.screens.contact.list.ContactListViewModel
 import com.edsonlimadev.appcontact.ui.screens.contact.list.ContactsListScreen
 import com.edsonlimadev.appcontact.ui.screens.favorite.FavoritesScreen
 import com.edsonlimadev.appcontact.ui.screens.profile.ProfileScreen
@@ -20,11 +24,17 @@ object Profile
 @Serializable
 object Favorite
 
-fun NavGraphBuilder.homeDestination(
+fun NavGraphBuilder.bottomBarDestination(
     navigateToDetail: () -> Unit
 ) {
+
     composable<ContactsList> {
+
+        val contactListViewModel = hiltViewModel<ContactListViewModel>()
+        val uiState by contactListViewModel.uiState.collectAsStateWithLifecycle()
+
         ContactsListScreen(
+            uiState = uiState,
             navigateToDetail = navigateToDetail
         )
     }

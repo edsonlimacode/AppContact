@@ -1,4 +1,4 @@
-package com.edsonlimadev.appcontact.ui.screens.contact.list
+package com.edsonlimadev.appcontact.ui.screens.contact.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -33,10 +33,6 @@ import com.edsonlimadev.appcontact.ui.navigation.navigateToProfile
 import com.edsonlimadev.appcontact.ui.theme.Dark900
 import com.edsonlimadev.appcontact.ui.theme.Violet500
 import com.edsonlimadev.appcontact.utils.getCurrentUser
-import kotlinx.serialization.Serializable
-
-@Serializable
-object Contacts
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

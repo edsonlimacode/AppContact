@@ -1,7 +1,10 @@
 package com.edsonlimadev.appcontact.ui.screens.contact.form
 
+import android.util.Log
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import com.edsonlimadev.appcontact.domain.mapper.toEntity
 import com.edsonlimadev.appcontact.domain.model.Contact
 import com.edsonlimadev.appcontact.domain.usecase.contact.AddToFavoriteUseCase
@@ -10,6 +13,7 @@ import com.edsonlimadev.appcontact.domain.usecase.contact.GetAllUseCase
 import com.edsonlimadev.appcontact.domain.usecase.contact.GetByIdUseCase
 import com.edsonlimadev.appcontact.domain.usecase.contact.InsertUseCase
 import com.edsonlimadev.appcontact.domain.usecase.contact.UpdateUseCase
+import com.edsonlimadev.appcontact.ui.navigation.ContactForm
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,39 +25,21 @@ import kotlin.contracts.contract
 
 @HiltViewModel
 class ContactFormViewModel @Inject constructor(
-    private val getAllUseCase: GetAllUseCase,
     private val insertUseCase: InsertUseCase,
     private val updateUseCase: UpdateUseCase,
     private val getByIdUseCase: GetByIdUseCase,
-    private val deleteUseCase: DeleteUseCase,
-    private val addToFavoriteUseCase: AddToFavoriteUseCase
+    private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
+
+    val contactId = savedStateHandle.toRoute<ContactForm>()
 
     private val _uiState = MutableStateFlow(ContactFormUiState())
     val uiState: StateFlow<ContactFormUiState> = _uiState.asStateFlow()
 
     init {
-        getAll()
+        Log.i("contactForm", "id: $contactId")
     }
 
-    private fun getAll() = viewModelScope.launch {
-        getAllUseCase().fold(
-            onSuccess = {
-                it.collect { contactsList ->
-                    contactsList?.let {
-                        _uiState.update { contactFormUiState ->
-                            contactFormUiState.copy(contacts = it)
-                        }
-                    }
-                }
-            },
-            onFailure = {
-                _uiState.update { contactFormUiState ->
-                    contactFormUiState.copy(error = it.message)
-                }
-            }
-        )
-    }
 
     fun getById(id: Long) = viewModelScope.launch {
         getByIdUseCase(id).fold(
@@ -83,28 +69,6 @@ class ContactFormViewModel @Inject constructor(
 
     fun update(contact: Contact) = viewModelScope.launch {
         updateUseCase(contact).fold(
-            onSuccess = {},
-            onFailure = {
-                _uiState.update { contactFormUiState ->
-                    contactFormUiState.copy(error = it.message)
-                }
-            }
-        )
-    }
-
-    fun delete(contact: Contact) = viewModelScope.launch {
-        deleteUseCase(contact).fold(
-            onSuccess = {},
-            onFailure = {
-                _uiState.update { contactFormUiState ->
-                    contactFormUiState.copy(error = it.message)
-                }
-            }
-        )
-    }
-
-    fun addToFavorite(contact: Contact) = viewModelScope.launch {
-        addToFavoriteUseCase(contact).fold(
             onSuccess = {},
             onFailure = {
                 _uiState.update { contactFormUiState ->

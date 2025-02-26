@@ -7,7 +7,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.edsonlimadev.appcontact.ui.navigation.ContactsList
-import com.edsonlimadev.appcontact.ui.navigation.homeDestination
+import com.edsonlimadev.appcontact.ui.navigation.bottomBarDestination
 
 @Composable
 fun BottomAppBarNavHost(
@@ -20,7 +20,7 @@ fun BottomAppBarNavHost(
         navController = navController,
         startDestination = ContactsList
     ) {
-        homeDestination(
+        bottomBarDestination(
             navigateToDetail = navigateToDetails
         )
     }

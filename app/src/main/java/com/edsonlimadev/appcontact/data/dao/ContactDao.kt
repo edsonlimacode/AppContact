@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 interface ContactDao {
 
     @Query("SELECT * FROM contacts")
-    fun getAllContacts(): Flow<List<ContactEntity>>
+    fun getAllContacts(): Flow<List<ContactEntity>?>
 
     @Insert
     suspend fun insert(contactEntity: ContactEntity)

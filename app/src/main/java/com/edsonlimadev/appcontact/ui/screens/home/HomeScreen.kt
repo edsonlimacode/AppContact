@@ -7,7 +7,7 @@ import com.edsonlimadev.appcontact.ui.navigation.host.HomeNavHost
 
 @Composable
 fun HomeScreen(
-    onLogout: () -> Unit
+    onLogout: () -> Unit,
 ) {
     HomeNavHost(
         onLogout = onLogout

@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import com.edsonlimadev.appcontact.ui.navigation.Auth
 import com.edsonlimadev.appcontact.ui.navigation.Home
 import com.edsonlimadev.appcontact.ui.navigation.authGraph
+import com.edsonlimadev.appcontact.ui.navigation.navigateToHome
 import com.edsonlimadev.appcontact.ui.navigation.navigateToLogin
 import com.edsonlimadev.appcontact.ui.screens.home.HomeScreen
 import com.edsonlimadev.appcontact.utils.isUserLoggedIn
