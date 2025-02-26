@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 interface IContactRepository {
     fun getAllContacts(): Flow<List<ContactEntity>?>
     suspend fun insertContact(contact: ContactEntity)
-    suspend fun getContactById(id: Long): ContactEntity?
+    suspend fun getContactById(id: Long): ContactEntity
     suspend fun updateContact(contact: ContactEntity)
     suspend fun deleteContact(contact: ContactEntity)
     suspend fun addToFavorite(contact: ContactEntity)

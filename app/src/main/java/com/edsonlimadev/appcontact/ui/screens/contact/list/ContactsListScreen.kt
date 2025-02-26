@@ -1,5 +1,6 @@
 package com.edsonlimadev.appcontact.ui.screens.contact.list
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -26,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.edsonlimadev.appcontact.R
+import com.edsonlimadev.appcontact.domain.model.Contact
 import com.edsonlimadev.appcontact.ui.components.ContactListItem
 import com.edsonlimadev.appcontact.ui.theme.Dark600
 import com.edsonlimadev.appcontact.ui.theme.Dark900
@@ -34,7 +36,7 @@ import com.edsonlimadev.appcontact.ui.theme.Gray700
 
 @Composable
 fun ContactsListScreen(
-    navigateToDetail: () -> Unit = {},
+    navigateToDetail: (Contact) -> Unit = {},
     uiState: ContactListUiState
 ) {
 
@@ -48,14 +50,17 @@ fun ContactsListScreen(
                 .padding(bottom = 20.dp)
                 .fillMaxWidth(),
             shape = RoundedCornerShape(corner = CornerSize(10.dp)),
-            value = "",
-            onValueChange = {},
+            value = uiState.search,
+            onValueChange = {
+                uiState.onSearchChance(it)
+            },
             placeholder = {
                 Text(text = "Pesquisa", color = Gray600)
             },
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = Dark600,
                 unfocusedContainerColor = Dark600,
+                focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
             ),
             leadingIcon = {
@@ -114,8 +119,14 @@ fun ContactsListScreen(
                 )
 
                 val contactsList = group.map { category ->
-                    category to uiState.contacts?.filter {
-                        it.name?.startsWith(category, true) ?: false
+                    if(uiState.search.isNotEmpty()){
+                        category to uiState.searchContacts?.filter {
+                            it.name?.startsWith(category, true) ?: false
+                        }
+                    }else {
+                        category to uiState.contacts?.filter {
+                            it.name?.startsWith(category, true) ?: false
+                        }
                     }
                 }
 
@@ -138,7 +149,7 @@ fun ContactsListScreen(
                                 modifier = Modifier.fillMaxWidth(),
                                 contact,
                                 navigateToDetail = {
-                                    navigateToDetail()
+                                    navigateToDetail(it)
                                 }
                             )
                             Spacer(Modifier.height(10.dp))

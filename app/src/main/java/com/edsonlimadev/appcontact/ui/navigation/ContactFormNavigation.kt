@@ -6,7 +6,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import androidx.navigation.toRoute
 import com.edsonlimadev.appcontact.ui.screens.contact.form.ContactFormScreen
 import com.edsonlimadev.appcontact.ui.screens.contact.form.ContactFormViewModel
 import kotlinx.serialization.Serializable
@@ -21,7 +20,6 @@ fun NavGraphBuilder.contactFormDestination(
 
     composable<ContactForm> {
 
-        val id = it.toRoute<ContactForm>()
         val contactFormViewModel = hiltViewModel<ContactFormViewModel>()
         val uiState by contactFormViewModel.uiState.collectAsStateWithLifecycle()
 

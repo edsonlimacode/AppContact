@@ -17,7 +17,7 @@ class ContactRepository @Inject constructor(
         contactDao.insert(contact)
     }
 
-    override suspend fun getContactById(id: Long): ContactEntity? {
+    override suspend fun getContactById(id: Long): ContactEntity {
         return contactDao.findById(id)
     }
 

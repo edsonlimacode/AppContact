@@ -3,6 +3,7 @@ package com.edsonlimadev.appcontact.ui.navigation
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.edsonlimadev.appcontact.domain.model.Contact
 import com.edsonlimadev.appcontact.ui.screens.contact.home.ContactsScreen
 import kotlinx.serialization.Serializable
 
@@ -12,11 +13,13 @@ object Contacts
 fun NavGraphBuilder.contactListDestination(
     onLogout: () -> Unit,
     navigateToContactForm: () -> Unit,
-    navigateToDetails: () -> Unit,
+    navigateToDetails: (Contact) -> Unit,
 ) {
     composable<Contacts> {
         ContactsScreen(
-            navigateToDetails = navigateToDetails,
+            navigateToDetails = {
+                navigateToDetails(it)
+            },
             navigateToContactForm = navigateToContactForm,
             onLogout = onLogout
         )
@@ -24,5 +27,7 @@ fun NavGraphBuilder.contactListDestination(
 }
 
 fun NavController.navigateToContactsHome() {
-    navigate(Contacts)
+    navigate(Contacts){
+        launchSingleTop = true
+    }
 }

@@ -22,11 +22,11 @@ import com.edsonlimadev.appcontact.domain.model.Contact
 @Composable
 fun ContactListItem(
     modifier: Modifier, contact: Contact,
-    navigateToDetail: () -> Unit
+    navigateToDetail: (Contact) -> Unit
 ) {
     Row(
         modifier = modifier.clickable {
-            navigateToDetail()
+            navigateToDetail(contact)
         },
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(10.dp)

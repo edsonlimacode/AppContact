@@ -27,11 +27,18 @@ fun HomeNavHost(
             navigateToContactForm = {
                 navController.navigateToContactForm()
             },
-            navigateToDetails = {
-                navController.navigateToDetails()
+            navigateToDetails = { contact ->
+                navController.navigateToDetails(contact.id)
             }
         )
-        detailsDestination()
+        detailsDestination(
+            navigateToContactForm = { contact ->
+                navController.navigateToContactForm(contact.id)
+            },
+            onClickBack = {
+                navController.popBackStack()
+            }
+        )
         contactFormDestination(
             onClickBackToHome = {
                 navController.navigateToContactsHome()

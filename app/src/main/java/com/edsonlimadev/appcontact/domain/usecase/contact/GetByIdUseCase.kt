@@ -11,9 +11,9 @@ class GetByIdUseCase @Inject constructor(
     private val contactRepository: ContactRepository
 ) {
 
-    suspend operator fun invoke(id: Long): Result<Contact?> {
+    suspend operator fun invoke(id: Long): Result<Contact> {
         try {
-            val contact = contactRepository.getContactById(id)?.toDomain()
+            val contact = contactRepository.getContactById(id).toDomain()
             return Result.success(contact)
         } catch (ex: Exception) {
             return Result.failure(ex)

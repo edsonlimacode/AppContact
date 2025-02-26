@@ -6,13 +6,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import com.edsonlimadev.appcontact.domain.model.Contact
 import com.edsonlimadev.appcontact.ui.navigation.ContactsList
 import com.edsonlimadev.appcontact.ui.navigation.bottomBarDestination
 
 @Composable
 fun BottomAppBarNavHost(
     navController: NavHostController,
-    navigateToDetails: () -> Unit = {},
+    navigateToDetails: (Contact) -> Unit = {},
 ) {
 
     NavHost(
@@ -21,7 +22,9 @@ fun BottomAppBarNavHost(
         startDestination = ContactsList
     ) {
         bottomBarDestination(
-            navigateToDetail = navigateToDetails
+            navigateToDetail = { contact ->
+                navigateToDetails(contact)
+            }
         )
     }
 }

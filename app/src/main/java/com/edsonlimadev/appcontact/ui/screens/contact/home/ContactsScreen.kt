@@ -24,6 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.edsonlimadev.appcontact.R
+import com.edsonlimadev.appcontact.domain.model.Contact
 import com.edsonlimadev.appcontact.ui.components.BottomNavigationBar
 import com.edsonlimadev.appcontact.ui.components.NavigationBarItem
 import com.edsonlimadev.appcontact.ui.navigation.host.BottomAppBarNavHost
@@ -38,7 +39,7 @@ import com.edsonlimadev.appcontact.utils.getCurrentUser
 @Composable
 fun ContactsScreen(
     navigateToContactForm: () -> Unit,
-    navigateToDetails: () -> Unit,
+    navigateToDetails: (Contact) -> Unit,
     onLogout: () -> Unit
 ) {
 
@@ -117,7 +118,9 @@ fun ContactsScreen(
         ) {
             BottomAppBarNavHost(
                 navController = navController,
-                navigateToDetails = navigateToDetails
+                navigateToDetails = {
+                    navigateToDetails(it)
+                }
             )
         }
     }

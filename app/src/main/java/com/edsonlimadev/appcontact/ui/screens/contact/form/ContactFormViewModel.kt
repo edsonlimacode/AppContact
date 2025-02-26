@@ -15,6 +15,7 @@ import com.edsonlimadev.appcontact.domain.usecase.contact.InsertUseCase
 import com.edsonlimadev.appcontact.domain.usecase.contact.UpdateUseCase
 import com.edsonlimadev.appcontact.ui.navigation.ContactForm
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,24 +29,77 @@ class ContactFormViewModel @Inject constructor(
     private val insertUseCase: InsertUseCase,
     private val updateUseCase: UpdateUseCase,
     private val getByIdUseCase: GetByIdUseCase,
-    private val savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    val contactId = savedStateHandle.toRoute<ContactForm>()
+    val contact = savedStateHandle.toRoute<ContactForm>()
 
     private val _uiState = MutableStateFlow(ContactFormUiState())
     val uiState: StateFlow<ContactFormUiState> = _uiState.asStateFlow()
 
     init {
-        Log.i("contactForm", "id: $contactId")
+        setFormData()
+        contact.id?.let {
+            getById(it)
+        }
     }
 
+    private fun setFormData() {
+        _uiState.update { contactFormUiState ->
+            contactFormUiState.copy(
+                onNameChange = {
+                    _uiState.value = _uiState.value.copy(
+                        name = it
+                    )
+                },
+                onNumberChange = {
+                    _uiState.value = _uiState.value.copy(
+                        number = it
+                    )
+                },
+                onAddressChange = {
+                    _uiState.value = _uiState.value.copy(
+                        address = it
+                    )
+                },
+                onAddressNumberChange = {
+                    _uiState.value = _uiState.value.copy(
+                        addressNumber = it
+                    )
+                },
+                onNeighborhoodChange = {
+                    _uiState.value = _uiState.value.copy(
+                        neighborhood = it
+                    )
+                },
+                onCityChange = {
+                    _uiState.value = _uiState.value.copy(
+                        city = it
+                    )
+                },
+                onUfChange = {
+                    _uiState.value = _uiState.value.copy(
+                        uf = it
+                    )
+                }
+            )
+        }
+    }
 
-    fun getById(id: Long) = viewModelScope.launch {
+    private fun getById(id: Long) = viewModelScope.launch {
         getByIdUseCase(id).fold(
-            onSuccess = {
+            onSuccess = { contact ->
                 _uiState.update { contactFormUiState ->
-                    contactFormUiState.copy(contact = it)
+                    contactFormUiState.copy(
+                        id = contact.id,
+                        name = contact.name ?: "",
+                        number = contact.number ?: "",
+                        address = contact.address ?: "",
+                        addressNumber = contact.addressNumber ?: "",
+                        neighborhood = contact.neighborhood ?: "",
+                        city = contact.city ?: "",
+                        uf = contact.uf ?: ""
+                    )
                 }
             },
             onFailure = {

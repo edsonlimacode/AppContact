@@ -8,7 +8,6 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,17 +18,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CardElevation
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -52,6 +46,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.edsonlimadev.appcontact.R
+import com.edsonlimadev.appcontact.domain.model.Contact
 import com.edsonlimadev.appcontact.ui.theme.Dark600
 import com.edsonlimadev.appcontact.ui.theme.Dark900
 import com.edsonlimadev.appcontact.ui.theme.Gray500
@@ -59,7 +54,12 @@ import com.edsonlimadev.appcontact.ui.theme.Gray600
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DetailsScreen(modifier: Modifier = Modifier) {
+fun DetailsScreen(
+    modifier: Modifier = Modifier,
+    contact: Contact,
+    navigateToContactForm: (Contact) -> Unit,
+    onClickBack: () -> Unit
+) {
 
     var expanded by remember { mutableStateOf(false) }
 
@@ -68,11 +68,17 @@ fun DetailsScreen(modifier: Modifier = Modifier) {
             TopAppBar(
                 title = {},
                 navigationIcon = {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_arrow_back_24),
-                        contentDescription = null,
-                        tint = Gray500
-                    )
+                    IconButton(
+                        onClick = onClickBack
+
+                    ) {
+                        Icon(
+                            modifier = Modifier,
+                            painter = painterResource(R.drawable.ic_arrow_back_24),
+                            contentDescription = null,
+                            tint = Gray500
+                        )
+                    }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Dark900
@@ -116,7 +122,9 @@ fun DetailsScreen(modifier: Modifier = Modifier) {
                         Text(text = "Editar", color = Gray600)
                     },
                     selected = false,
-                    onClick = { /*TODO*/ },
+                    onClick = {
+                        navigateToContactForm(contact)
+                    },
                     icon = {
                         Icon(
                             painter = painterResource(R.drawable.ic_profile),
@@ -158,14 +166,14 @@ fun DetailsScreen(modifier: Modifier = Modifier) {
                         contentScale = ContentScale.Crop
                     )
                     Text(
-                        text = "Edson Lima", style = TextStyle(
+                        text = contact.name ?: "", style = TextStyle(
                             fontSize = 20.sp,
                             color = Color.White
                         )
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = "(88) 99990-9999", style = TextStyle(
+                        text = contact.number ?: "", style = TextStyle(
                             fontSize = 14.sp,
                             color = Color.White
                         )
@@ -222,10 +230,14 @@ fun DetailsScreen(modifier: Modifier = Modifier) {
                         exit = fadeOut() + shrinkVertically()
                     ) {
                         if (expanded) {
-                            Text(
-                                text = "Content Sample for Display on Expansion of Card",
-                                modifier = Modifier.padding(8.dp)
-                            )
+                            Column(
+                                modifier = Modifier.padding(top = 16.dp),
+                                verticalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                Text("Endereço: ${contact.address} N° ${contact.addressNumber}")
+                                Text("Bairro: ${contact.neighborhood}")
+                                Text("Cidade: ${contact.city} - ${contact.uf}")
+                            }
                         }
                     }
                 }
@@ -237,5 +249,18 @@ fun DetailsScreen(modifier: Modifier = Modifier) {
 @Preview
 @Composable
 private fun DetailsScreenPrev() {
-    DetailsScreen()
+    DetailsScreen(
+        contact = Contact(
+            2,
+            "Alex michael",
+            "889922325",
+            "Av. sete",
+            "980",
+            "Jardim seven",
+            "Fortaleza",
+            "CE",
+        ),
+        navigateToContactForm = {},
+        onClickBack = {}
+    )
 }

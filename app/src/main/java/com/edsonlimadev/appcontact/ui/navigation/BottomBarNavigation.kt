@@ -6,6 +6,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import com.edsonlimadev.appcontact.domain.model.Contact
 import com.edsonlimadev.appcontact.ui.screens.contact.list.ContactListViewModel
 import com.edsonlimadev.appcontact.ui.screens.contact.list.ContactsListScreen
 import com.edsonlimadev.appcontact.ui.screens.favorite.FavoritesScreen
@@ -25,7 +26,7 @@ object Profile
 object Favorite
 
 fun NavGraphBuilder.bottomBarDestination(
-    navigateToDetail: () -> Unit
+    navigateToDetail: (Contact) -> Unit
 ) {
 
     composable<ContactsList> {
@@ -35,7 +36,9 @@ fun NavGraphBuilder.bottomBarDestination(
 
         ContactsListScreen(
             uiState = uiState,
-            navigateToDetail = navigateToDetail
+            navigateToDetail = { contact ->
+                navigateToDetail(contact)
+            }
         )
     }
 
@@ -60,7 +63,7 @@ fun NavController.navigateToHome() {
 fun NavController.navigateToContactsList() {
     navigate(ContactsList) {
         launchSingleTop = true
-        popUpTo<Login> {
+        popUpTo<ContactsList> {
             inclusive = true
         }
     }

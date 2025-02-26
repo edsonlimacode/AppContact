@@ -1,5 +1,6 @@
 package com.edsonlimadev.appcontact.ui.screens.contact.form
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -42,28 +43,6 @@ fun ContactFormScreen(
     uiState: ContactFormUiState
 ) {
 
-    var name by remember {
-        mutableStateOf(uiState.contact?.name ?: "")
-    }
-    var number by remember {
-        mutableStateOf("")
-    }
-    var address by remember {
-        mutableStateOf("")
-    }
-    var addressNumber by remember {
-        mutableStateOf("")
-    }
-    var neighborhood by remember {
-        mutableStateOf("")
-    }
-    var city by remember {
-        mutableStateOf("")
-    }
-    var uf by remember {
-        mutableStateOf("")
-    }
-
     val context = LocalContext.current
 
     Column(
@@ -103,17 +82,17 @@ fun ContactFormScreen(
             ) {
                 CustomTextField(
                     modifier = Modifier.fillMaxWidth(),
-                    value = name,
+                    value = uiState.name,
                     onValueChange = {
-                        name = it
+                        uiState.onNameChange(it)
                     },
                     placeholder = "Nome"
                 )
                 CustomTextField(
                     modifier = Modifier.fillMaxWidth(),
-                    value = number,
+                    value = uiState.number,
                     onValueChange = {
-                        number = it
+                        uiState.onNumberChange(it)
                     },
                     placeholder = "Numero"
                 )
@@ -136,17 +115,17 @@ fun ContactFormScreen(
                 ) {
                     CustomTextField(
                         modifier = Modifier.fillMaxWidth(0.8f),
-                        value = address,
+                        value = uiState.address,
                         onValueChange = {
-                            address = it
+                            uiState.onAddressChange(it)
                         },
                         placeholder = "Rua"
                     )
                     CustomTextField(
                         modifier = Modifier.fillMaxWidth(),
-                        value = addressNumber,
+                        value = uiState.addressNumber,
                         onValueChange = {
-                            addressNumber = it
+                            uiState.onAddressNumberChange(it)
                         },
                         placeholder = "N°"
                     )
@@ -154,9 +133,9 @@ fun ContactFormScreen(
 
                 CustomTextField(
                     modifier = Modifier.fillMaxWidth(),
-                    value = neighborhood,
+                    value = uiState.neighborhood,
                     onValueChange = {
-                        neighborhood = it
+                        uiState.onNeighborhoodChange(it)
                     },
                     placeholder = "Bairro"
                 )
@@ -166,17 +145,17 @@ fun ContactFormScreen(
                 ) {
                     CustomTextField(
                         modifier = Modifier.fillMaxWidth(0.8f),
-                        value = city,
+                        value = uiState.city,
                         onValueChange = {
-                            city = it
+                            uiState.onCityChange(it)
                         },
                         placeholder = "Cidade"
                     )
                     CustomTextField(
                         modifier = Modifier.fillMaxWidth(),
-                        value = uf,
+                        value = uiState.uf,
                         onValueChange = {
-                            uf = it
+                            uiState.onUfChange(it)
                         },
                         placeholder = "UF"
                     )
@@ -198,17 +177,22 @@ fun ContactFormScreen(
                     TextButton(
                         modifier = Modifier.height(48.dp),
                         onClick = {
-                            if(number.isEmpty() || name.isEmpty()){
-                                Toast.makeText(context, "Nome e numero são obrigatórios", Toast.LENGTH_SHORT).show()
-                            }else {
+                            if (uiState.number.isEmpty() || uiState.name?.isEmpty() == true) {
+                                Toast.makeText(
+                                    context,
+                                    "Nome e numero são obrigatórios",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            } else {
                                 val contact = Contact(
-                                    name = name,
-                                    number = number,
-                                    address = address,
-                                    addressNumber = addressNumber,
-                                    neighborhood = neighborhood,
-                                    city = city,
-                                    uf = uf
+                                    id = uiState.id,
+                                    name = uiState.name,
+                                    number = uiState.number,
+                                    address = uiState.address,
+                                    addressNumber = uiState.addressNumber,
+                                    neighborhood = uiState.neighborhood,
+                                    city = uiState.city,
+                                    uf = uiState.uf
                                 )
                                 onClickSave(contact)
                             }
