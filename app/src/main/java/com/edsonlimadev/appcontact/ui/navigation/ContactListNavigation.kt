@@ -1,5 +1,7 @@
 package com.edsonlimadev.appcontact.ui.navigation
 
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -15,7 +17,12 @@ fun NavGraphBuilder.contactListDestination(
     navigateToContactForm: () -> Unit,
     navigateToDetails: (Contact) -> Unit,
 ) {
-    composable<Contacts> {
+    composable<Contacts>(
+        enterTransition = { slideInHorizontally { it } },
+        exitTransition = { slideOutHorizontally { -it } },
+        popEnterTransition = { slideInHorizontally { -it } },
+        popExitTransition = { slideOutHorizontally { it } }
+    ) {
         ContactsScreen(
             navigateToDetails = {
                 navigateToDetails(it)

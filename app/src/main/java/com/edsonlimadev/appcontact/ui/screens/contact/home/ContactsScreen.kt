@@ -118,7 +118,6 @@ fun ContactsScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(it)
-                .background(Dark900)
         ) {
             BottomAppBarNavHost(
                 navController = navController,

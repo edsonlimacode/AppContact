@@ -1,5 +1,7 @@
 package com.edsonlimadev.appcontact.ui.navigation
 
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -18,7 +20,12 @@ fun NavGraphBuilder.contactFormDestination(
     onClickBackToHome: () -> Unit = {}
 ) {
 
-    composable<ContactForm> {
+    composable<ContactForm>(
+        enterTransition = { slideInHorizontally { it } },
+        exitTransition = {  slideOutHorizontally { -it } },
+        popEnterTransition = { slideInHorizontally { -it } },
+        popExitTransition = { slideOutHorizontally { it } }
+    ) {
 
         val contactFormViewModel = hiltViewModel<ContactFormViewModel>()
         val uiState by contactFormViewModel.uiState.collectAsStateWithLifecycle()

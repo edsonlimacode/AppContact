@@ -1,6 +1,10 @@
 package com.edsonlimadev.appcontact.ui.navigation.host
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
@@ -11,6 +15,7 @@ import com.edsonlimadev.appcontact.ui.navigation.detailsDestination
 import com.edsonlimadev.appcontact.ui.navigation.navigateToContactForm
 import com.edsonlimadev.appcontact.ui.navigation.navigateToContactsHome
 import com.edsonlimadev.appcontact.ui.navigation.navigateToDetails
+import com.edsonlimadev.appcontact.ui.theme.Dark900
 
 @Composable
 fun HomeNavHost(

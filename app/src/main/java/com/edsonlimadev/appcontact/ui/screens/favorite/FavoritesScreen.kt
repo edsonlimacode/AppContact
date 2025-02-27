@@ -42,7 +42,6 @@ fun FavoritesScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Dark900)
     ) {
 
         if (uiState.contactsFavorites?.isEmpty() == true) {

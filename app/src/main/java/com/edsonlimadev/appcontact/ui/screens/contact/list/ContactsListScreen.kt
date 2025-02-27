@@ -43,7 +43,6 @@ fun ContactsListScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Dark900)
     ) {
         TextField(
             modifier = Modifier

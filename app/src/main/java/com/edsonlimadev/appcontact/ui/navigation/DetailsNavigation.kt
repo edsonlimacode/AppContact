@@ -1,5 +1,9 @@
 package com.edsonlimadev.appcontact.ui.navigation
 
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -21,7 +25,12 @@ fun NavGraphBuilder.detailsDestination(
     onClickBack: () -> Unit
 ) {
 
-    composable<Detail> {
+    composable<Detail>(
+        enterTransition = { slideInHorizontally { it } },
+        exitTransition = {  slideOutHorizontally { -it } },
+        popEnterTransition = { slideInHorizontally { -it } },
+        popExitTransition = { slideOutHorizontally { it }}
+    ) {
 
         val detailsViewModel = hiltViewModel<DetailsViewModel>()
         val uiState by detailsViewModel.uiState.collectAsStateWithLifecycle()

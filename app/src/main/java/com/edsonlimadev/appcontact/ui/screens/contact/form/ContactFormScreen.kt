@@ -48,7 +48,6 @@ fun ContactFormScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Dark900)
             .verticalScroll(rememberScrollState()),
     ) {
         Column(

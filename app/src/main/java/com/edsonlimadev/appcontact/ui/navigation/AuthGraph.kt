@@ -1,5 +1,7 @@
 package com.edsonlimadev.appcontact.ui.navigation
 
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -32,7 +34,12 @@ fun NavGraphBuilder.authGraph(
     ) {
 
 
-        composable<Login> {
+        composable<Login>(
+            enterTransition = { slideInHorizontally { it } },
+            exitTransition = {  slideOutHorizontally { -it } },
+            popEnterTransition = { slideInHorizontally { -it } },
+            popExitTransition = { slideOutHorizontally { it } }
+        ) {
             val loginViewModel = hiltViewModel<LoginViewModel>()
             val uiState by loginViewModel.uiState.collectAsStateWithLifecycle()
             val toastMessage by loginViewModel.toastMessage.collectAsStateWithLifecycle()
@@ -53,7 +60,12 @@ fun NavGraphBuilder.authGraph(
             )
         }
 
-        composable<Register> {
+        composable<Register>(
+            enterTransition = { slideInHorizontally { it } },
+            exitTransition = {  slideOutHorizontally { -it } },
+            popEnterTransition = { slideInHorizontally { -it } },
+            popExitTransition = { slideOutHorizontally { it }}
+        ) {
 
             val authViewModel = hiltViewModel<RegisterViewModel>()
             val uiState by authViewModel.uiState.collectAsStateWithLifecycle()
