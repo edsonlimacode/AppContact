@@ -26,6 +26,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -33,6 +36,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,19 +55,36 @@ import com.edsonlimadev.appcontact.ui.theme.Dark600
 import com.edsonlimadev.appcontact.ui.theme.Dark900
 import com.edsonlimadev.appcontact.ui.theme.Gray500
 import com.edsonlimadev.appcontact.ui.theme.Gray600
+import com.edsonlimadev.appcontact.ui.theme.Green500
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailsScreen(
     modifier: Modifier = Modifier,
     contact: Contact,
+    addToFavorite: (Contact) -> Unit,
     navigateToContactForm: (Contact) -> Unit,
     onClickBack: () -> Unit
 ) {
 
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+
     var expanded by remember { mutableStateOf(false) }
 
     Scaffold(
+        snackbarHost = {
+            SnackbarHost(snackbarHostState){data ->
+                Snackbar(
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    containerColor = Gray600,
+                    contentColor = Color.White
+                ){
+                    Text(data.visuals.message)
+                }
+            }
+        },
         topBar = {
             TopAppBar(
                 title = {},
@@ -94,7 +115,10 @@ fun DetailsScreen(
                         Text(text = "Favoritos", color = Gray600)
                     },
                     selected = false,
-                    onClick = { /*TODO*/ },
+                    onClick = {
+                        addToFavorite(contact)
+                        scope.launch { snackbarHostState.showSnackbar("Adicionado aos favoritos") }
+                    },
                     icon = {
                         Icon(
                             painter = painterResource(R.drawable.ic_heart_add),
@@ -261,6 +285,7 @@ private fun DetailsScreenPrev() {
             "CE",
         ),
         navigateToContactForm = {},
-        onClickBack = {}
+        onClickBack = {},
+        addToFavorite = {}
     )
 }

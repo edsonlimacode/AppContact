@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import com.edsonlimadev.appcontact.domain.model.Contact
 import com.edsonlimadev.appcontact.ui.screens.contact.list.ContactListViewModel
 import com.edsonlimadev.appcontact.ui.screens.contact.list.ContactsListScreen
+import com.edsonlimadev.appcontact.ui.screens.favorite.FavoriteViewModel
 import com.edsonlimadev.appcontact.ui.screens.favorite.FavoritesScreen
 import com.edsonlimadev.appcontact.ui.screens.profile.ProfileScreen
 import kotlinx.serialization.Serializable
@@ -47,7 +48,16 @@ fun NavGraphBuilder.bottomBarDestination(
     }
 
     composable<Favorite> {
-        FavoritesScreen()
+
+        val favoriteViewModel = hiltViewModel<FavoriteViewModel>()
+        val uiState by favoriteViewModel.uiState.collectAsStateWithLifecycle()
+
+        FavoritesScreen(
+            uiState = uiState,
+            navigateToDetail = { contact ->
+                navigateToDetail(contact)
+            }
+        )
     }
 }
 

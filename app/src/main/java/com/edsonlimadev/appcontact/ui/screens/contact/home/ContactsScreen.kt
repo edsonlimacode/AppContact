@@ -53,7 +53,11 @@ fun ContactsScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = "Contatos")
+                    when (itemSelected) {
+                        NavigationBarItem.Home -> Text(text = "Contatos")
+                        NavigationBarItem.Favorite -> Text(text = "Favoritos")
+                        NavigationBarItem.Profile -> Text(text = "Perfil")
+                    }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = Dark900,

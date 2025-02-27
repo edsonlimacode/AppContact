@@ -4,6 +4,8 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import com.edsonlimadev.appcontact.domain.model.Contact
+import com.edsonlimadev.appcontact.domain.usecase.contact.AddToFavoriteUseCase
 import com.edsonlimadev.appcontact.domain.usecase.contact.GetByIdUseCase
 import com.edsonlimadev.appcontact.ui.navigation.ContactForm
 import com.edsonlimadev.appcontact.ui.navigation.Detail
@@ -18,6 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailsViewModel @Inject constructor(
     private val getByIdUseCase: GetByIdUseCase,
+    private val addToFavoriteUseCase: AddToFavoriteUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -37,6 +40,18 @@ class DetailsViewModel @Inject constructor(
                     contactDetailsUiState.copy(contact = it)
                 }
             },
+            onFailure = {
+                _uiState.update { contactDetailsUiState ->
+                    contactDetailsUiState.copy(error = it.message)
+                }
+            }
+        )
+    }
+
+    fun addToFavorite(contact: Contact) = viewModelScope.launch {
+
+        addToFavoriteUseCase(contact).fold(
+            onSuccess = {},
             onFailure = {
                 _uiState.update { contactDetailsUiState ->
                     contactDetailsUiState.copy(error = it.message)

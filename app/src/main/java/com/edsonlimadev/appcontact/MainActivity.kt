@@ -17,7 +17,9 @@ class MainActivity : ComponentActivity() {
         installSplashScreen()
         enableEdgeToEdge()
         setContent {
-            AppContactTheme {
+            AppContactTheme(
+                darkTheme = false
+            ) {
                 MainNavHost()
             }
         }

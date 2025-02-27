@@ -30,4 +30,7 @@ interface ContactDao {
     @Query("UPDATE contacts SET favorite = :isFavorite WHERE id = :id")
     suspend fun addToFavorite(id: Long, isFavorite: Boolean)
 
+    @Query("SELECT * FROM contacts WHERE favorite = 1")
+    fun getFavorites(): Flow<List<ContactEntity>?>
+
 }

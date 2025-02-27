@@ -13,6 +13,10 @@ class ContactRepository @Inject constructor(
         return contactDao.getAllContacts()
     }
 
+    override fun getAllFavorites(): Flow<List<ContactEntity>?> {
+        return contactDao.getFavorites()
+    }
+
     override suspend fun insertContact(contact: ContactEntity) {
         contactDao.insert(contact)
     }
@@ -30,6 +34,10 @@ class ContactRepository @Inject constructor(
     }
 
     override suspend fun addToFavorite(contact: ContactEntity) {
-        contactDao.addToFavorite(contact.id, contact.favorite)
+        if (contact.favorite) {
+            contactDao.addToFavorite(contact.id, false)
+        } else {
+            contactDao.addToFavorite(contact.id, true)
+        }
     }
 }

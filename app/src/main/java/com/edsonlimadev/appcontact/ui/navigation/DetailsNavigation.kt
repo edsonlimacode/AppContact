@@ -32,7 +32,10 @@ fun NavGraphBuilder.detailsDestination(
                         navigateToContactForm(it)
                 },
                 contact = contact,
-                onClickBack = onClickBack
+                onClickBack = onClickBack,
+                addToFavorite = {
+                    detailsViewModel.addToFavorite(it)
+                }
             )
         }
     }
