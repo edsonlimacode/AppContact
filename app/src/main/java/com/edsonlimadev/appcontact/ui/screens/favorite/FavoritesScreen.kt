@@ -22,11 +22,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.edsonlimadev.appcontact.R
 import com.edsonlimadev.appcontact.domain.model.Contact
 import com.edsonlimadev.appcontact.ui.components.ContactListItem
+import com.edsonlimadev.appcontact.ui.components.FavoriteListItem
 import com.edsonlimadev.appcontact.ui.theme.Dark600
 import com.edsonlimadev.appcontact.ui.theme.Dark900
 import com.edsonlimadev.appcontact.ui.theme.Gray600
@@ -59,12 +61,14 @@ fun FavoritesScreen(
         } else {
 
             LazyColumn(
-                modifier = Modifier.fillMaxWidth().padding(top = 24.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 24.dp),
             ) {
 
                 uiState.contactsFavorites?.let { contacts ->
                     items(items = contacts, key = { it.id }) { contact ->
-                        ContactListItem(
+                        FavoriteListItem(
                             modifier = Modifier.fillMaxWidth(),
                             contact,
                             navigateToDetail = {
@@ -77,4 +81,13 @@ fun FavoritesScreen(
             }
         }
     }
+}
+
+@Preview
+@Composable
+private fun ContactsScreenPrev() {
+    FavoritesScreen(
+        uiState = FavoriteListUiState(),
+        navigateToDetail = {  }
+    )
 }

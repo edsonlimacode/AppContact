@@ -24,15 +24,15 @@ import com.edsonlimadev.appcontact.ui.theme.Gray500
 
 
 @Composable
-fun ContactListItem(
+fun FavoriteListItem(
     modifier: Modifier, contact: Contact,
     navigateToDetail: (Contact) -> Unit
 ) {
     Row(
         modifier = modifier
             .clickable {
-                navigateToDetail(contact)
-            },
+            navigateToDetail(contact)
+        },
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {
@@ -44,15 +44,19 @@ fun ContactListItem(
             contentDescription = null,
             contentScale = ContentScale.Crop
         )
-
-        contact.name?.let { Text(text = it, fontSize = 20.sp, color = Color.White) }
+        Column(
+            verticalArrangement = Arrangement.spacedBy(2.dp)
+        ) {
+            contact.name?.let { Text(text = it, fontSize = 20.sp, color = Color.White) }
+            contact.number?.let { Text(text = it, fontSize = 14.sp, color = Gray500) }
+        }
     }
 }
 
 @Preview
 @Composable
-private fun ContactListItemPrev() {
-    ContactListItem(
+private fun FavoriteListItemPrev() {
+    FavoriteListItem(
         contact = Contact(
             2,
             "Alex michael",

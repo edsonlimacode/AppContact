@@ -7,6 +7,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -42,7 +43,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -51,6 +54,7 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.edsonlimadev.appcontact.R
 import com.edsonlimadev.appcontact.domain.model.Contact
+import com.edsonlimadev.appcontact.extensions.shareFileWith
 import com.edsonlimadev.appcontact.ui.theme.Dark600
 import com.edsonlimadev.appcontact.ui.theme.Dark900
 import com.edsonlimadev.appcontact.ui.theme.Gray500
@@ -73,14 +77,16 @@ fun DetailsScreen(
 
     var expanded by remember { mutableStateOf(false) }
 
+    val context = LocalContext.current
+
     Scaffold(
         snackbarHost = {
-            SnackbarHost(snackbarHostState){data ->
+            SnackbarHost(snackbarHostState) { data ->
                 Snackbar(
                     modifier = Modifier.padding(horizontal = 16.dp),
                     containerColor = Gray600,
                     contentColor = Color.White
-                ){
+                ) {
                     Text(data.visuals.message)
                 }
             }
@@ -132,7 +138,9 @@ fun DetailsScreen(
                         Text(text = "Compartilhar", color = Gray600)
                     },
                     selected = false,
-                    onClick = { /*TODO*/ },
+                    onClick = {
+                        context.shareFileWith(contact)
+                    },
                     icon = {
                         Icon(
                             painter = painterResource(R.drawable.ic_share),
