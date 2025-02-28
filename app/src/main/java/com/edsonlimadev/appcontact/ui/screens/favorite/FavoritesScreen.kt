@@ -1,6 +1,7 @@
 package com.edsonlimadev.appcontact.ui.screens.favorite
 
-import androidx.compose.foundation.background
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,34 +11,27 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.edsonlimadev.appcontact.R
 import com.edsonlimadev.appcontact.domain.model.Contact
-import com.edsonlimadev.appcontact.ui.components.ContactListItem
 import com.edsonlimadev.appcontact.ui.components.FavoriteListItem
-import com.edsonlimadev.appcontact.ui.theme.Dark600
-import com.edsonlimadev.appcontact.ui.theme.Dark900
 import com.edsonlimadev.appcontact.ui.theme.Gray600
-import com.edsonlimadev.appcontact.ui.theme.Gray700
 
 @Composable
 fun FavoritesScreen(
     uiState: FavoriteListUiState,
-    navigateToDetail: (Contact) -> Unit = {}
+    navigateToDetail: (Contact) -> Unit = {},
+    removeFavorite: (Contact) -> Unit = {}
 ) {
     Column(
         modifier = Modifier
@@ -67,13 +61,28 @@ fun FavoritesScreen(
 
                 uiState.contactsFavorites?.let { contacts ->
                     items(items = contacts, key = { it.id }) { contact ->
-                        FavoriteListItem(
-                            modifier = Modifier.fillMaxWidth(),
-                            contact,
-                            navigateToDetail = {
-                                navigateToDetail(it)
-                            }
-                        )
+
+                        var isVisible by remember {
+                            mutableStateOf(true)
+                        }
+
+                        AnimatedVisibility(
+                            visible = isVisible,
+                            exit = fadeOut()
+                        ) {
+                            FavoriteListItem(
+                                modifier = Modifier.fillMaxWidth(),
+                                contact,
+                                navigateToDetail = {
+                                    navigateToDetail(it)
+                                },
+                                removeFavorite = {
+                                    removeFavorite(it)
+                                    isVisible = false
+                                }
+                            )
+                        }
+
                         Spacer(Modifier.height(10.dp))
                     }
                 }
@@ -87,6 +96,6 @@ fun FavoritesScreen(
 private fun ContactsScreenPrev() {
     FavoritesScreen(
         uiState = FavoriteListUiState(),
-        navigateToDetail = {  }
+        navigateToDetail = { }
     )
 }

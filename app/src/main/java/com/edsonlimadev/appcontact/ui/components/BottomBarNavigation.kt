@@ -60,18 +60,20 @@ fun BottomNavigationBar(
                 icon = {
                     Icon(
                         painter = painterResource(if (selectedItem == item) item.iconSelected else item.icon),
-                        tint = Gray500,
+
                         contentDescription = item.label
                     )
                 },
-                label = { Text(text = item.label, color = Gray500) },
+                label = { Text(text = item.label) },
                 selected = selectedItem == item,
                 onClick = {
                     onClickNavigate(item)
                 },
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor = Violet500,
+                    unselectedIconColor = Gray500,
                     selectedTextColor = Violet500,
+                    unselectedTextColor = Gray500,
                     indicatorColor = Color.Transparent
                 )
             )

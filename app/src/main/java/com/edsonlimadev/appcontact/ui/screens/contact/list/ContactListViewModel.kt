@@ -2,6 +2,8 @@ package com.edsonlimadev.appcontact.ui.screens.contact.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.edsonlimadev.appcontact.domain.model.Contact
+import com.edsonlimadev.appcontact.domain.usecase.contact.DeleteUseCase
 import com.edsonlimadev.appcontact.domain.usecase.contact.GetAllUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,6 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ContactListViewModel @Inject constructor(
     private val getAllUseCase: GetAllUseCase,
+    private val deleteUseCase: DeleteUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ContactListUiState())
@@ -64,6 +67,17 @@ class ContactListViewModel @Inject constructor(
                     }
                 }
             },
+            onFailure = {
+                _uiState.update { contactFormUiState ->
+                    contactFormUiState.copy(error = it.message)
+                }
+            }
+        )
+    }
+
+    fun delete(contact: Contact) = viewModelScope.launch {
+        deleteUseCase(contact).fold(
+            onSuccess = {},
             onFailure = {
                 _uiState.update { contactFormUiState ->
                     contactFormUiState.copy(error = it.message)

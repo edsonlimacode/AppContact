@@ -22,13 +22,13 @@ interface ContactDao {
     suspend fun findById(id: Long): ContactEntity
 
     @Update
-    suspend fun upadate(contactEntity: ContactEntity)
+    suspend fun update(contactEntity: ContactEntity)
 
     @Delete
     suspend fun delete(contactEntity: ContactEntity)
 
     @Query("UPDATE contacts SET favorite = :isFavorite WHERE id = :id")
-    suspend fun addToFavorite(id: Long, isFavorite: Boolean)
+    suspend fun addOrRemoveFavorite(id: Long, isFavorite: Boolean)
 
     @Query("SELECT * FROM contacts WHERE favorite = 1")
     fun getFavorites(): Flow<List<ContactEntity>?>

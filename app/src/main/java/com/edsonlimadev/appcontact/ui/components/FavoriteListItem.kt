@@ -7,8 +7,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,13 +35,12 @@ import com.edsonlimadev.appcontact.ui.theme.Violet500
 @Composable
 fun FavoriteListItem(
     modifier: Modifier, contact: Contact,
-    navigateToDetail: (Contact) -> Unit
+    navigateToDetail: (Contact) -> Unit,
+    removeFavorite: (Contact) -> Unit
 ) {
     Row(
         modifier = modifier
-            .clickable {
-                navigateToDetail(contact)
-            },
+            .padding(end = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {
@@ -64,11 +69,28 @@ fun FavoriteListItem(
             }
         }
         Column(
+            modifier = Modifier.weight(1f).clickable {
+                navigateToDetail(contact)
+            },
             verticalArrangement = Arrangement.spacedBy(2.dp)
         ) {
             contact.name?.let { Text(text = it, fontSize = 20.sp, color = Color.White) }
             contact.number?.let { Text(text = it, fontSize = 14.sp, color = Gray500) }
         }
+
+        IconButton(
+            onClick = {
+                removeFavorite(contact)
+            }
+        ) {
+            Icon(
+                imageVector = Icons.Default.Delete,
+                contentDescription = null,
+                tint = Color.Red,
+            )
+        }
+
+
     }
 }
 
@@ -82,6 +104,7 @@ private fun FavoriteListItemPrev() {
             "889922325"
         ),
         navigateToDetail = {},
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
+        removeFavorite = {}
     )
 }

@@ -1,6 +1,5 @@
 package com.edsonlimadev.appcontact.ui.screens.contact.list
 
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeOut
@@ -51,12 +50,12 @@ import com.edsonlimadev.appcontact.ui.theme.Dark900
 import com.edsonlimadev.appcontact.ui.theme.Gray500
 import com.edsonlimadev.appcontact.ui.theme.Gray600
 import com.edsonlimadev.appcontact.ui.theme.Gray700
-import kotlinx.coroutines.coroutineScope
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ContactsListScreen(
     navigateToDetail: (Contact) -> Unit = {},
+    onDelete: (Contact) -> Unit,
     uiState: ContactListUiState
 ) {
 
@@ -154,11 +153,11 @@ fun ContactsListScreen(
 
                 items(items = contactsList, key = { it }) {
 
-
                     val title = it.first
                     val contacts = it.second
 
                     if (contacts?.isNotEmpty() == true) {
+
                         Text(
                             modifier = Modifier.padding(bottom = 10.dp),
                             text = title,
@@ -182,7 +181,7 @@ fun ContactsListScreen(
                             LaunchedEffect(swipeToDismissBoxState.currentValue) {
                                 if (swipeToDismissBoxState.currentValue == SwipeToDismissBoxValue.EndToStart) {
                                     isRemoved = true
-                                    Log.i("removido", "ContactsListScreen: ${contact.name}")
+                                    onDelete(contact)
                                 }
                             }
 
@@ -243,5 +242,5 @@ fun ContactsListScreen(
 @Preview
 @Composable
 private fun ContactsListScreenPreview() {
-    ContactsListScreen(uiState = ContactListUiState())
+    ContactsListScreen(uiState = ContactListUiState(), onDelete = {})
 }

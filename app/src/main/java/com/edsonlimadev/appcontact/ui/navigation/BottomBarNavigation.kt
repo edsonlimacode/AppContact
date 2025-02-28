@@ -39,6 +39,9 @@ fun NavGraphBuilder.bottomBarDestination(
             uiState = uiState,
             navigateToDetail = { contact ->
                 navigateToDetail(contact)
+            },
+            onDelete = {
+                contactListViewModel.delete(it)
             }
         )
     }
@@ -56,6 +59,9 @@ fun NavGraphBuilder.bottomBarDestination(
             uiState = uiState,
             navigateToDetail = { contact ->
                 navigateToDetail(contact)
+            },
+            removeFavorite = {
+                favoriteViewModel.removeFavorite(it)
             }
         )
     }

@@ -11,4 +11,5 @@ interface IContactRepository {
     suspend fun updateContact(contact: ContactEntity)
     suspend fun deleteContact(contact: ContactEntity)
     suspend fun addToFavorite(contact: ContactEntity)
+    suspend fun removeFavorite(contact: ContactEntity)
 }

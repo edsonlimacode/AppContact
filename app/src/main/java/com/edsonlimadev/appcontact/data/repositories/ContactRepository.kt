@@ -26,7 +26,7 @@ class ContactRepository @Inject constructor(
     }
 
     override suspend fun updateContact(contact: ContactEntity) {
-        contactDao.upadate(contact)
+        contactDao.update(contact)
     }
 
     override suspend fun deleteContact(contact: ContactEntity) {
@@ -34,10 +34,10 @@ class ContactRepository @Inject constructor(
     }
 
     override suspend fun addToFavorite(contact: ContactEntity) {
-        if (contact.favorite) {
-            contactDao.addToFavorite(contact.id, false)
-        } else {
-            contactDao.addToFavorite(contact.id, true)
-        }
+        contactDao.addOrRemoveFavorite(contact.id, true)
+    }
+
+    override suspend fun removeFavorite(contact: ContactEntity) {
+        contactDao.addOrRemoveFavorite(contact.id, false)
     }
 }
