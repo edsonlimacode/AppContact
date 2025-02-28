@@ -1,7 +1,9 @@
 package com.edsonlimadev.appcontact.ui.components
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,6 +23,7 @@ import coil3.compose.AsyncImage
 import com.edsonlimadev.appcontact.R
 import com.edsonlimadev.appcontact.domain.model.Contact
 import com.edsonlimadev.appcontact.ui.theme.Gray500
+import com.edsonlimadev.appcontact.ui.theme.Violet500
 
 
 @Composable
@@ -31,19 +34,35 @@ fun FavoriteListItem(
     Row(
         modifier = modifier
             .clickable {
-            navigateToDetail(contact)
-        },
+                navigateToDetail(contact)
+            },
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(10.dp)
     ) {
-        AsyncImage(
-            modifier = Modifier
-                .size(50.dp)
-                .clip(CircleShape),
-            model = R.drawable.screen,
-            contentDescription = null,
-            contentScale = ContentScale.Crop
-        )
+        if (contact.avatar?.isNotEmpty() == true) {
+            AsyncImage(
+                modifier = Modifier
+                    .size(50.dp)
+                    .clip(CircleShape),
+                model = R.drawable.screen,
+                contentDescription = null,
+                contentScale = ContentScale.Crop
+            )
+        } else {
+            Box(
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .background(Violet500)
+                    .size(50.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = contact.name?.first()?.uppercase().toString(),
+                    color = Color.White,
+                    fontSize = 18.sp
+                )
+            }
+        }
         Column(
             verticalArrangement = Arrangement.spacedBy(2.dp)
         ) {

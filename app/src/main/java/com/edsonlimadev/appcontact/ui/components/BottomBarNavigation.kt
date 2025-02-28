@@ -12,6 +12,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import com.edsonlimadev.appcontact.R
 import com.edsonlimadev.appcontact.ui.theme.Dark800
+import com.edsonlimadev.appcontact.ui.theme.Gray500
+import com.edsonlimadev.appcontact.ui.theme.Gray800
 import com.edsonlimadev.appcontact.ui.theme.Violet500
 
 
@@ -58,10 +60,11 @@ fun BottomNavigationBar(
                 icon = {
                     Icon(
                         painter = painterResource(if (selectedItem == item) item.iconSelected else item.icon),
+                        tint = Gray500,
                         contentDescription = item.label
                     )
                 },
-                label = { Text(text = item.label) },
+                label = { Text(text = item.label, color = Gray500) },
                 selected = selectedItem == item,
                 onClick = {
                     onClickNavigate(item)

@@ -32,6 +32,7 @@ import com.edsonlimadev.appcontact.ui.navigation.navigateToContactsList
 import com.edsonlimadev.appcontact.ui.navigation.navigateToFavorite
 import com.edsonlimadev.appcontact.ui.navigation.navigateToProfile
 import com.edsonlimadev.appcontact.ui.theme.Dark900
+import com.edsonlimadev.appcontact.ui.theme.Gray500
 import com.edsonlimadev.appcontact.ui.theme.Violet500
 import com.edsonlimadev.appcontact.utils.getCurrentUser
 
@@ -72,6 +73,7 @@ fun ContactsScreen(
                     ) {
                         Icon(
                             painter = painterResource(R.drawable.ic_logout),
+                            tint = Gray500,
                             contentDescription = null
                         )
                     }

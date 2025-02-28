@@ -15,6 +15,7 @@ import com.edsonlimadev.appcontact.ui.navigation.detailsDestination
 import com.edsonlimadev.appcontact.ui.navigation.navigateToContactForm
 import com.edsonlimadev.appcontact.ui.navigation.navigateToContactsHome
 import com.edsonlimadev.appcontact.ui.navigation.navigateToDetails
+import com.edsonlimadev.appcontact.ui.navigation.navigateToFavorite
 import com.edsonlimadev.appcontact.ui.theme.Dark900
 
 @Composable

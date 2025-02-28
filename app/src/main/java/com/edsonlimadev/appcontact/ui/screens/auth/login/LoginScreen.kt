@@ -45,6 +45,7 @@ import com.edsonlimadev.appcontact.R
 import com.edsonlimadev.appcontact.ui.components.CustomTextField
 import com.edsonlimadev.appcontact.ui.theme.Dark900
 import com.edsonlimadev.appcontact.ui.theme.Gray500
+import com.edsonlimadev.appcontact.ui.theme.Gray600
 import com.edsonlimadev.appcontact.ui.theme.Gray700
 import com.edsonlimadev.appcontact.ui.theme.Violet500
 
@@ -75,8 +76,7 @@ fun LoginScreen(
 
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .background(Dark900),
+            .fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -131,7 +131,9 @@ fun LoginScreen(
                     unfocusedBorderColor = Gray700,
                     focusedTextColor = Color.White,
                     unfocusedTextColor = Color.White,
-                    cursorColor = Color.White
+                    cursorColor = Color.White,
+                    unfocusedPlaceholderColor = Gray600,
+                    focusedPlaceholderColor = Gray600
                 ),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.Password

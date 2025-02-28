@@ -11,6 +11,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import com.edsonlimadev.appcontact.ui.theme.Gray600
 import com.edsonlimadev.appcontact.ui.theme.Gray700
 
 
@@ -38,7 +39,9 @@ fun CustomTextField(
             unfocusedBorderColor = Gray700,
             focusedTextColor = Color.White,
             unfocusedTextColor = Color.White,
-            cursorColor = Color.White
+            cursorColor = Color.White,
+            unfocusedPlaceholderColor = Gray600,
+            focusedPlaceholderColor = Gray600
         ),
         keyboardOptions = KeyboardOptions(
             keyboardType = keyboardOptions

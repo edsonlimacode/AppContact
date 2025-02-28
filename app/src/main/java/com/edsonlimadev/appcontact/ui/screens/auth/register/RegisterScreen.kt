@@ -44,6 +44,7 @@ import com.edsonlimadev.appcontact.R
 import com.edsonlimadev.appcontact.ui.components.CustomTextField
 import com.edsonlimadev.appcontact.ui.theme.Dark900
 import com.edsonlimadev.appcontact.ui.theme.Gray500
+import com.edsonlimadev.appcontact.ui.theme.Gray600
 import com.edsonlimadev.appcontact.ui.theme.Gray700
 import com.edsonlimadev.appcontact.ui.theme.Violet500
 
@@ -83,7 +84,6 @@ fun RegisterScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Dark900)
     ) {
 
         Icon(
@@ -99,8 +99,7 @@ fun RegisterScreen(
 
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .background(Dark900),
+                .fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -164,7 +163,9 @@ fun RegisterScreen(
                         unfocusedBorderColor = Gray700,
                         focusedTextColor = Color.White,
                         unfocusedTextColor = Color.White,
-                        cursorColor = Color.White
+                        cursorColor = Color.White,
+                        unfocusedPlaceholderColor = Gray600,
+                        focusedPlaceholderColor = Gray600
                     ),
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Password
@@ -174,7 +175,7 @@ fun RegisterScreen(
                         val image =
                             if (passwordVisible) R.drawable.ic_visibility_24 else R.drawable.ic_visibility_off_24
                         IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                            Icon(painter = painterResource(image), contentDescription = null)
+                            Icon(painter = painterResource(image), tint = Gray600, contentDescription = null)
                         }
                     }
                 )

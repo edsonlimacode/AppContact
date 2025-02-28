@@ -7,7 +7,6 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -43,7 +42,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -58,8 +56,7 @@ import com.edsonlimadev.appcontact.extensions.shareFileWith
 import com.edsonlimadev.appcontact.ui.theme.Dark600
 import com.edsonlimadev.appcontact.ui.theme.Dark900
 import com.edsonlimadev.appcontact.ui.theme.Gray500
-import com.edsonlimadev.appcontact.ui.theme.Gray600
-import com.edsonlimadev.appcontact.ui.theme.Green500
+import com.edsonlimadev.appcontact.ui.theme.Gray800
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -84,8 +81,8 @@ fun DetailsScreen(
             SnackbarHost(snackbarHostState) { data ->
                 Snackbar(
                     modifier = Modifier.padding(horizontal = 16.dp),
-                    containerColor = Gray600,
-                    contentColor = Color.White
+                    containerColor = Gray800,
+                    contentColor = Color.White,
                 ) {
                     Text(data.visuals.message)
                 }
@@ -118,7 +115,7 @@ fun DetailsScreen(
             ) {
                 NavigationBarItem(
                     label = {
-                        Text(text = "Favoritos", color = Gray600)
+                        Text(text = "Favoritos", color = Gray500)
                     },
                     selected = false,
                     onClick = {
@@ -135,7 +132,7 @@ fun DetailsScreen(
                 )
                 NavigationBarItem(
                     label = {
-                        Text(text = "Compartilhar", color = Gray600)
+                        Text(text = "Compartilhar", color = Gray500)
                     },
                     selected = false,
                     onClick = {
@@ -151,7 +148,7 @@ fun DetailsScreen(
                 )
                 NavigationBarItem(
                     label = {
-                        Text(text = "Editar", color = Gray600)
+                        Text(text = "Editar", color = Gray500)
                     },
                     selected = false,
                     onClick = {
