@@ -1,7 +1,5 @@
 package com.edsonlimadev.appcontact.ui.navigation
 
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.getValue
@@ -14,7 +12,6 @@ import com.edsonlimadev.appcontact.domain.model.Contact
 import com.edsonlimadev.appcontact.ui.screens.details.DetailsScreen
 import com.edsonlimadev.appcontact.ui.screens.details.DetailsViewModel
 import kotlinx.serialization.Serializable
-import kotlin.contracts.contract
 
 @Serializable
 data class Detail(val id: Long)

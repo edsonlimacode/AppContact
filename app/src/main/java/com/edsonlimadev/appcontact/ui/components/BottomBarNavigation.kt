@@ -13,7 +13,6 @@ import androidx.compose.ui.res.painterResource
 import com.edsonlimadev.appcontact.R
 import com.edsonlimadev.appcontact.ui.theme.Dark800
 import com.edsonlimadev.appcontact.ui.theme.Gray500
-import com.edsonlimadev.appcontact.ui.theme.Gray800
 import com.edsonlimadev.appcontact.ui.theme.Violet500
 
 

@@ -1,5 +1,8 @@
 package com.edsonlimadev.appcontact.ui.screens.favorite
 
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Arrangement
@@ -19,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -33,6 +37,9 @@ fun FavoritesScreen(
     navigateToDetail: (Contact) -> Unit = {},
     removeFavorite: (Contact) -> Unit = {}
 ) {
+
+    val context = LocalContext.current
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -52,6 +59,8 @@ fun FavoritesScreen(
                 )
             }
         } else {
+
+
 
             LazyColumn(
                 modifier = Modifier

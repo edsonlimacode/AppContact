@@ -1,5 +1,6 @@
 package com.edsonlimadev.appcontact.ui.navigation
 
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -12,6 +13,7 @@ import com.edsonlimadev.appcontact.ui.screens.contact.list.ContactsListScreen
 import com.edsonlimadev.appcontact.ui.screens.favorite.FavoriteViewModel
 import com.edsonlimadev.appcontact.ui.screens.favorite.FavoritesScreen
 import com.edsonlimadev.appcontact.ui.screens.profile.ProfileScreen
+import com.edsonlimadev.appcontact.ui.screens.profile.ProfileViewModel
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -26,6 +28,7 @@ object Profile
 @Serializable
 object Favorite
 
+@OptIn(ExperimentalMaterial3Api::class)
 fun NavGraphBuilder.bottomBarDestination(
     navigateToDetail: (Contact) -> Unit
 ) {
@@ -47,7 +50,16 @@ fun NavGraphBuilder.bottomBarDestination(
     }
 
     composable<Profile> {
-        ProfileScreen()
+
+        val profileViewModel = hiltViewModel<ProfileViewModel>()
+        val uiState by profileViewModel.uiState.collectAsStateWithLifecycle()
+
+        ProfileScreen(
+            uiState = uiState,
+            onSaveToStorage = {
+                profileViewModel.saveImageProfile(it)
+            }
+        )
     }
 
     composable<Favorite> {

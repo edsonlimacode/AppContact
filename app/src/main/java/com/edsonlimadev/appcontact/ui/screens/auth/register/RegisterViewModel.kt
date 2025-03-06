@@ -2,7 +2,9 @@ package com.edsonlimadev.appcontact.ui.screens.auth.register
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.edsonlimadev.appcontact.domain.model.Profile
 import com.edsonlimadev.appcontact.domain.usecase.auth.RegisterUseCase
+import com.edsonlimadev.appcontact.domain.usecase.profile.SaveProfileUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
-    private val registerUseCase: RegisterUseCase
+    private val registerUseCase: RegisterUseCase,
+    private val saveProfileUseCase: SaveProfileUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(RegisterUiState())
@@ -37,11 +40,17 @@ class RegisterViewModel @Inject constructor(
                     uiState.value.password
                 ).fold(
                     onSuccess = {
-                        viewModelScope.launch {
-                            _toastMessage.value =
-                                RegisterErrorUiEvent.Success("Cadastro realizado com sucesso")
-                            clearToastMessage()
-                        }
+                        _toastMessage.value =
+                            RegisterErrorUiEvent.Success("Cadastro realizado com sucesso")
+
+                        saveProfileUseCase(
+                            Profile(
+                                name = uiState.value.name,
+                                email = uiState.value.email
+                            )
+                        )
+
+                        clearToastMessage()
                     },
                     onFailure = { exception ->
                         viewModelScope.launch {
@@ -71,6 +80,7 @@ class RegisterViewModel @Inject constructor(
             clearToastMessage()
         }
     }
+
 
     private fun clearToastMessage() {
         viewModelScope.launch {

@@ -1,7 +1,6 @@
 package com.edsonlimadev.appcontact.ui.screens.auth.register
 
 import android.widget.Toast
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -42,7 +41,6 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.edsonlimadev.appcontact.R
 import com.edsonlimadev.appcontact.ui.components.CustomTextField
-import com.edsonlimadev.appcontact.ui.theme.Dark900
 import com.edsonlimadev.appcontact.ui.theme.Gray500
 import com.edsonlimadev.appcontact.ui.theme.Gray600
 import com.edsonlimadev.appcontact.ui.theme.Gray700
