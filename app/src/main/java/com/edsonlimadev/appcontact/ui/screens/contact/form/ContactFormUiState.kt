@@ -4,6 +4,7 @@ package com.edsonlimadev.appcontact.ui.screens.contact.form
 data class ContactFormUiState(
     val id: Long = 0,
     val name: String = "",
+    val userId: String = "",
     val number: String = "",
     val address: String = "",
     val addressNumber: String = "",

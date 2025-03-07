@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.edsonlimadev.appcontact.domain.model.Contact
 import com.edsonlimadev.appcontact.domain.usecase.contact.DeleteUseCase
 import com.edsonlimadev.appcontact.domain.usecase.contact.GetAllUseCase
+import com.edsonlimadev.appcontact.utils.getUserId
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -33,7 +34,7 @@ class ContactListViewModel @Inject constructor(
     }
 
     private fun getAll() = viewModelScope.launch {
-        getAllUseCase().fold(
+        getAllUseCase(getUserId().toString()).fold(
             onSuccess = {
                 it.collect { contactsList ->
                     contactsList?.let {
@@ -52,14 +53,14 @@ class ContactListViewModel @Inject constructor(
     }
 
     private fun searchContacts(search: String) = viewModelScope.launch {
-        getAllUseCase().fold(
+        getAllUseCase(getUserId().toString()).fold(
             onSuccess = {
                 it.collect { contactsList ->
                     contactsList?.let { contactList ->
                         _uiState.update { contactFormUiState ->
                             val filterContacts =
                                 contactList.filter { contact ->
-                                    contact.name?.contains(_uiState.value.search, true) == true
+                                    contact.name?.contains(search, true) == true
                                 }
 
                             contactFormUiState.copy(searchContacts = filterContacts)

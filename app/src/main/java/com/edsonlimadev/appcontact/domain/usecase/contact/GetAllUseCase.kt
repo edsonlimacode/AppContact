@@ -11,9 +11,9 @@ class GetAllUseCase @Inject constructor(
     private val contactRepository: ContactRepository
 ) {
 
-    operator fun invoke(): Result<Flow<List<Contact>?>> {
+    operator fun invoke(userId: String): Result<Flow<List<Contact>?>> {
         try {
-            val contacts = contactRepository.getAllContacts().map { it?.map { it.toDomain() } }
+            val contacts = contactRepository.getAllContacts(userId).map { it?.map { it.toDomain() } }
             return Result.success(contacts)
         } catch (ex: Exception) {
             return Result.failure(ex)

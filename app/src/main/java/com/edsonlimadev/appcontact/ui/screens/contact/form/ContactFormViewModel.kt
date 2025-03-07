@@ -86,6 +86,7 @@ class ContactFormViewModel @Inject constructor(
                     contactFormUiState.copy(
                         id = contact.id,
                         name = contact.name ?: "",
+                        userId = contact.name ?: "",
                         number = contact.number ?: "",
                         address = contact.address ?: "",
                         addressNumber = contact.addressNumber ?: "",

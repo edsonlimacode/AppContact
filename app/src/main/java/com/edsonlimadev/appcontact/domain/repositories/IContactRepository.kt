@@ -4,7 +4,7 @@ import com.edsonlimadev.appcontact.data.entities.ContactEntity
 import kotlinx.coroutines.flow.Flow
 
 interface IContactRepository {
-    fun getAllContacts(): Flow<List<ContactEntity>?>
+    fun getAllContacts(userId: String): Flow<List<ContactEntity>?>
     fun getAllFavorites(): Flow<List<ContactEntity>?>
     suspend fun insertContact(contact: ContactEntity)
     suspend fun getContactById(id: Long): ContactEntity

@@ -28,6 +28,7 @@ import com.edsonlimadev.appcontact.R
 import com.edsonlimadev.appcontact.domain.model.Contact
 import com.edsonlimadev.appcontact.ui.components.CustomTextField
 import com.edsonlimadev.appcontact.ui.theme.Gray500
+import com.edsonlimadev.appcontact.utils.getUserId
 
 @Composable
 fun ContactFormScreen(
@@ -179,6 +180,7 @@ fun ContactFormScreen(
                                 val contact = Contact(
                                     id = uiState.id,
                                     name = uiState.name,
+                                    userId = getUserId().toString(),
                                     number = uiState.number,
                                     address = uiState.address,
                                     addressNumber = uiState.addressNumber,

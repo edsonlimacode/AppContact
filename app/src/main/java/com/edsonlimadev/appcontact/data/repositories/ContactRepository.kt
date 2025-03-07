@@ -9,8 +9,8 @@ import javax.inject.Inject
 class ContactRepository @Inject constructor(
     private val contactDao: ContactDao
 ) : IContactRepository {
-    override fun getAllContacts(): Flow<List<ContactEntity>?> {
-        return contactDao.getAllContacts()
+    override fun getAllContacts(userId: String): Flow<List<ContactEntity>?> {
+        return contactDao.getAllContacts(userId)
     }
 
     override fun getAllFavorites(): Flow<List<ContactEntity>?> {

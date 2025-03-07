@@ -12,8 +12,8 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ContactDao {
 
-    @Query("SELECT * FROM contacts")
-    fun getAllContacts(): Flow<List<ContactEntity>?>
+    @Query("SELECT * FROM contacts where userId = :userId")
+    fun getAllContacts(userId: String): Flow<List<ContactEntity>?>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(contactEntity: ContactEntity)

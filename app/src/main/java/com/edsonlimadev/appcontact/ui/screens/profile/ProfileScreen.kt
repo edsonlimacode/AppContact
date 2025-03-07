@@ -1,7 +1,6 @@
 package com.edsonlimadev.appcontact.ui.screens.profile
 
 import android.net.Uri
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
@@ -42,16 +41,18 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.net.toUri
 import coil3.compose.AsyncImage
 import com.edsonlimadev.appcontact.R
-import com.edsonlimadev.appcontact.domain.model.Profile
+import com.edsonlimadev.appcontact.extensions.cameraPermission
+import com.edsonlimadev.appcontact.extensions.checkPermission
+import com.edsonlimadev.appcontact.extensions.createImageUri
 import com.edsonlimadev.appcontact.ui.theme.Dark600
 import com.edsonlimadev.appcontact.ui.theme.Dark800
 import com.edsonlimadev.appcontact.ui.theme.Dark900
 import com.edsonlimadev.appcontact.ui.theme.Gray500
 import com.edsonlimadev.appcontact.ui.theme.Violet500
 import com.edsonlimadev.appcontact.utils.getCurrentUser
-import com.edsonlimadev.appcontact.utils.getFirestore
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -65,6 +66,8 @@ fun ProfileScreen(
 
     val sheetState = rememberModalBottomSheetState()
     var showBottomSheet by remember { mutableStateOf(false) }
+
+    var imageUri by remember { mutableStateOf<Uri?>(null) }
 
     Column(
         modifier = Modifier
@@ -98,9 +101,7 @@ fun ProfileScreen(
                             modifier = Modifier
                                 .size(80.dp)
                                 .clip(CircleShape),
-                            model = if (uiState.profile.image?.isNotEmpty() == true) Uri.parse(
-                                uiState.profile.image
-                            ) else R.drawable.default_avatar,
+                            model = if (uiState.profile.image?.isNotEmpty() == true) uiState.profile.image.toUri() else R.drawable.default_avatar,
                             contentDescription = null,
                             contentScale = ContentScale.Crop
                         )
@@ -129,6 +130,16 @@ fun ProfileScreen(
                 )
             }
 
+            val requestPermissionLauncher = rememberLauncherForActivityResult(
+                ActivityResultContracts.RequestPermission()
+            ) { isGranted: Boolean ->
+                if (isGranted) {
+                    showBottomSheet = true
+                } else {
+                    Toast.makeText(context, "Permissão de câmera negada", Toast.LENGTH_SHORT).show()
+                }
+            }
+
             val pickMedia = rememberLauncherForActivityResult(
                 ActivityResultContracts.PickVisualMedia()
             ) { uri ->
@@ -137,6 +148,17 @@ fun ProfileScreen(
                     onSaveToStorage(uri)
                 } else {
                     Toast.makeText(context, "Selecione uma imagem", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            val cameraLauncher = rememberLauncherForActivityResult(
+                ActivityResultContracts.TakePicture()
+            ) { success ->
+                if (success) {
+                    imageUri?.let { uri ->
+                        showBottomSheet = false
+                        onSaveToStorage(uri)
+                    }
                 }
             }
 
@@ -185,7 +207,19 @@ fun ProfileScreen(
                                 colors = IconButtonDefaults.iconButtonColors(
                                     containerColor = Dark800
                                 ),
-                                onClick = {}) {
+                                onClick = {
+
+                                    if(context.checkPermission(cameraPermission())){
+                                        val uri = context.createImageUri(context)
+                                        uri?.let {
+                                            imageUri = uri
+                                            cameraLauncher.launch(uri)
+                                        }
+                                    }else {
+                                        showBottomSheet = false
+                                        requestPermissionLauncher.launch(cameraPermission())
+                                    }
+                                }) {
                                 Icon(
                                     modifier = Modifier.padding(10.dp),
                                     painter = painterResource(R.drawable.ic_add_a_photo),

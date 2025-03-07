@@ -8,6 +8,7 @@ fun ContactEntity.toDomain(): Contact {
     return Contact(
         id = id,
         name = name,
+        userId = userId,
         number = number,
         address = address,
         addressNumber = addressNumber,
@@ -22,6 +23,7 @@ fun Contact.toEntity(): ContactEntity {
     return ContactEntity(
         id = id,
         name = name,
+        userId = userId,
         number = number,
         address = address,
         addressNumber = addressNumber,
